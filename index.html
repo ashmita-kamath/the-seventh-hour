@@ -3,176 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Seventh Hour | Into the Unknown</title>
+    <title>The Seventh Hour | Magical Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4af37;
-            --chaos: #ff0033;
-            --stability: #00d4ff;
+            --mystic-gold: #c3a343;
+            --deep-obsidian: #050505;
+            --rift-purple: #4a1d96;
         }
 
         body {
-            background-color: #050505;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            background-color: var(--deep-obsidian);
+            color: #e0e0e0;
+            font-family: 'Quicksand', sans-serif;
+            cursor: crosshair;
         }
 
-        h1, h2, h3 { font-family: 'Cinzel', serif; }
+        h1, h2, .font-wizard { font-family: 'Cinzel', serif; }
 
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-            color: var(--gold);
+        /* Mystic Glow Cursor Effect */
+        .magic-bg {
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(195, 163, 67, 0.15) 0%, transparent 50%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
         }
 
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #050505;
+        /* Glitch for the Fracture theme */
+        .glitch-text {
+            text-shadow: 2px 0 var(--rift-purple), -2px 0 #00d4ff;
+            animation: jitter 4s infinite;
         }
 
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 var(--stability);
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+        @keyframes jitter {
+            0% { transform: translate(0); }
+            1% { transform: translate(2px, -1px); }
+            2% { transform: translate(-1px, 1px); }
+            3% { transform: translate(0); }
         }
 
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 var(--chaos);
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        .mode-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(195, 163, 67, 0.1);
         }
 
-        @keyframes glitch-anim {
-            0% { clip: rect(31px, 9999px, 94px, 0); }
-            20% { clip: rect(62px, 9999px, 42px, 0); }
-            /* ... add more steps if needed ... */
-            100% { clip: rect(89px, 9999px, 98px, 0); }
+        .mode-card:hover {
+            border-color: var(--mystic-gold);
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(195, 163, 67, 0.2);
         }
 
-        @keyframes glitch-anim2 {
-            0% { clip: rect(15px, 9999px, 22px, 0); }
-            100% { clip: rect(80px, 9999px, 90px, 0); }
-        }
-
-        /* Floating Particles Background */
-        .particles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #111 0%, #050505 100%);
-        }
-
-        .fracture-line {
-            position: absolute;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            height: 1px;
-            width: 100%;
-            opacity: 0.1;
-            transform: rotate(-45deg);
-        }
-
-        .nav-link:hover {
-            color: var(--gold);
-            text-shadow: 0 0 10px var(--gold);
+        /* 3D Level Locked Slots */
+        .level-locked {
+            filter: grayscale(1) blur(2px);
+            opacity: 0.4;
+            pointer-events: none;
         }
     </style>
 </head>
-<body>
+<body onmousemove="document.body.style.setProperty('--x', event.clientX + 'px'); document.body.style.setProperty('--y', event.clientY + 'px')">
 
-    <div class="particles">
-        <div class="fracture-line" style="top: 20%; left: -10%;"></div>
-        <div class="fracture-line" style="top: 60%; left: 10%;"></div>
-    </div>
+    <div class="magic-bg"></div>
 
-    <nav class="flex justify-between items-center p-8 fixed w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
-        <div class="text-2xl font-bold tracking-widest glitch" data-text="VII">VII</div>
-        <div class="space-x-8 uppercase text-xs tracking-widest font-light">
-            <a href="#" class="nav-link transition">The Lore</a>
-            <a href="#" class="nav-link transition">Characters</a>
-            <a href="#" class="nav-link transition border border-gold-500/50 px-4 py-2 text-gold-500 hover:bg-gold-500 hover:text-black">Play Demo</a>
+    <nav class="p-6 flex justify-between items-center fixed w-full z-50 bg-black/80 backdrop-blur-lg border-b border-gold-900/20">
+        <div class="text-xl font-bold tracking-[0.3em] text-yellow-600 font-wizard">THE VII HOUR</div>
+        <div class="hidden md:flex space-x-10 text-xs uppercase tracking-[0.2em]">
+            <a href="#modes" class="hover:text-yellow-500 transition">Game Modes</a>
+            <a href="#3d-levels" class="hover:text-yellow-500 transition">The Citadel</a>
+            <a href="#" class="text-yellow-600 border border-yellow-600/30 px-4 py-1 hover:bg-yellow-600 hover:text-black transition">Launch App</a>
         </div>
     </nav>
 
-    <section class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-        
-        <h2 class="text-gold-500 text-sm tracking-[0.5em] uppercase mb-4 animate-pulse">The Timeline is Fractured</h2>
-        <h1 class="text-6xl md:text-9xl font-bold glitch mb-6" data-text="THE SEVENTH HOUR">
-            THE SEVENTH HOUR
-        </h1>
-        <p class="max-w-2xl text-gray-400 font-light leading-relaxed text-lg">
-            Hogwarts has been torn sideways. Navigate 8 checkpoints across distorted memories, frozen time, and parallel realities. 
-            <span class="text-white">Will you mend the clock or break it forever?</span>
+    <header class="h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div class="mb-4 text-yellow-700 tracking-[1em] uppercase text-xs">A Fractured Hogwarts Experience</div>
+        <h1 class="text-6xl md:text-8xl mb-6 glitch-text font-wizard uppercase tracking-tighter">The Seventh Hour</h1>
+        <p class="max-w-xl text-gray-500 font-light text-sm md:text-base leading-loose">
+            Time has frozen within the stone walls. Navigate the <span class="text-yellow-600">Story</span> of the fracture or step into the <span class="text-yellow-600">3D Realm</span> to explore the echo of magic.
         </p>
         
-        <div class="mt-12 space-x-6">
-            <button onclick="location.href='#start'" class="bg-gold-600 text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all shadow-xl shadow-gold-500/20">
-                Enter the Rift
-            </button>
+        <div class="flex flex-col md:flex-row gap-6 mt-12">
+            <a href="#modes" class="px-12 py-4 bg-yellow-700/10 border border-yellow-600/50 text-yellow-500 font-bold uppercase tracking-widest hover:bg-yellow-600 hover:text-black transition-all">Begin Journey</a>
         </div>
+    </header>
 
-        <div class="absolute bottom-10 animate-bounce opacity-30 text-xs tracking-widest uppercase">
-            Scroll to uncover the unknown
-        </div>
-    </section>
-
-    <section id="start" class="py-32 px-10 max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <section id="modes" class="py-24 px-6 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-wizard mb-16 tracking-widest uppercase">Select Your Path</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             
-            <div class="group border border-white/10 p-8 hover:border-blue-500/50 transition-all bg-gray-900/20 backdrop-blur-sm">
-                <div class="h-1 w-20 bg-blue-500 mb-6 group-hover:w-full transition-all duration-700"></div>
-                <h3 class="text-2xl mb-4 text-blue-400">The Restorer</h3>
-                <p class="text-gray-400 font-light">Bring order to the chaos. Stabilize the fracture and ensure the timeline remains pure.</p>
-                <ul class="mt-6 text-xs uppercase tracking-tighter space-y-2 opacity-60">
-                    <li>+ Order</li>
-                    <li>+ Classic Spells</li>
-                </ul>
+            <div class="mode-card bg-zinc-900/30 p-10 rounded-sm relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-wizard">01</div>
+                <h3 class="text-2xl font-wizard text-yellow-500 mb-4">The Chronicler</h3>
+                <div class="text-xs uppercase text-yellow-800 mb-6 tracking-widest font-bold">Mode: Story-Driven</div>
+                <p class="text-gray-400 mb-8 font-light">Follow the 8 tasks of the Temporal Anchor. Every choice affects your alignment: Stability, Chaos, or Knowledge.</p>
+                <button class="text-xs border-b border-yellow-600 pb-1 hover:text-yellow-500 transition">Enter Narrative</button>
             </div>
 
-            <div class="group border border-white/10 p-8 hover:border-purple-500/50 transition-all bg-gray-900/20 backdrop-blur-sm">
-                <div class="h-1 w-20 bg-purple-500 mb-6 group-hover:w-full transition-all duration-700"></div>
-                <h3 class="text-2xl mb-4 text-purple-400">The Weaver</h3>
-                <p class="text-gray-400 font-light">Observe the ripples. Learn to walk between realities and harness the power of "What If."</p>
-                <ul class="mt-6 text-xs uppercase tracking-tighter space-y-2 opacity-60">
-                    <li>+ Insight</li>
-                    <li>+ Forbidden Runes</li>
-                </ul>
-            </div>
-
-            <div class="group border border-white/10 p-8 hover:border-red-600/50 transition-all bg-gray-900/20 backdrop-blur-sm">
-                <div class="h-1 w-20 bg-red-600 mb-6 group-hover:w-full transition-all duration-700"></div>
-                <h3 class="text-2xl mb-4 text-red-600">The Anomaly</h3>
-                <p class="text-gray-400 font-light">Let it burn. Rewrite the wizarding world rules. You are the fracture itself.</p>
-                <ul class="mt-6 text-xs uppercase tracking-tighter space-y-2 opacity-60">
-                    <li>+ Power</li>
-                    <li>+ Mutation</li>
-                </ul>
+            <div class="mode-card bg-zinc-900/30 p-10 rounded-sm relative overflow-hidden group border-purple-900/30">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl font-wizard">02</div>
+                <h3 class="text-2xl font-wizard text-purple-400 mb-4">The Explorer</h3>
+                <div class="text-xs uppercase text-purple-800 mb-6 tracking-widest font-bold">Mode: 3D Real-Time</div>
+                <p class="text-gray-400 mb-8 font-light">Physically walk through the fractured halls. Experience the mystic atmosphere with high-fidelity visuals.</p>
+                <button class="text-xs border-b border-purple-500 pb-1 hover:text-purple-400 transition">Step into 3D</button>
             </div>
 
         </div>
     </section>
 
-    <footer class="border-t border-white/5 py-10 text-center opacity-40 text-xs tracking-widest uppercase">
-        &copy; 2026 THE SEVENTH HOUR | Built for the Unknown
+    <section id="3d-levels" class="py-24 bg-black/40">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-wizard mb-4 tracking-widest uppercase">3D Level Selection</h2>
+            <p class="text-gray-500 mb-12 text-sm uppercase tracking-widest">Atmospheric Domains</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="relative aspect-video bg-zinc-800 border border-yellow-600/50 flex items-center justify-center group cursor-pointer overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-60" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=800');"></div>
+                    <div class="relative z-10 text-center">
+                        <div class="text-xs text-yellow-500 font-bold mb-1 uppercase tracking-widest">Level 01</div>
+                        <div class="text-xl font-wizard">The Great Fracture</div>
+                    </div>
+                </div>
+
+                <div class="level-locked relative aspect-video bg-zinc-900 border border-white/5 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-xs mb-1 uppercase tracking-widest">Level 02</div>
+                        <div class="text-xl font-wizard">The Inverted Forest</div>
+                        <div class="mt-2 text-[10px] bg-white/10 px-2 py-1">LOCKED BY THE COUNCIL</div>
+                    </div>
+                </div>
+
+                <div class="level-locked relative aspect-video bg-zinc-900 border border-white/5 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-xs mb-1 uppercase tracking-widest">Level 03</div>
+                        <div class="text-xl font-wizard">The Mirror Void</div>
+                        <div class="mt-2 text-[10px] bg-white/10 px-2 py-1">LOCKED BY THE COUNCIL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center">
+        <div class="text-[10px] text-gray-600 uppercase tracking-[0.5em] mb-4">Developed by the Seventh Hour Team</div>
+        <div class="h-px w-20 bg-yellow-900 mx-auto opacity-30"></div>
     </footer>
 
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>
